@@ -4,6 +4,4 @@ public interface IEditableSelectProperty extends IProperty {
 	public int getChildrenCount();
 	public IProperty getChild(int index);
 	public int getSelectedIndex();
-	public void setDefaultProperties(String propertyName, String value);
-	public int getDefaultPropertiesSize();
 }

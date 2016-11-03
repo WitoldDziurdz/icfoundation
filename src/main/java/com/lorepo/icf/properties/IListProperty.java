@@ -15,6 +15,4 @@ public interface IListProperty extends IProperty {
 	public void removeChildren(int index);
 	public void moveChildUp(int index);
 	public void moveChildDown(int index);
-	public IProperty getTemplateProperty (int index);
-	public int getTemplateSize();
 }
