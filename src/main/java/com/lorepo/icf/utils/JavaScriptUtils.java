@@ -68,12 +68,10 @@ public class JavaScriptUtils {
 
 	public native static void log(String message) /*-{
 		$wnd.console.log(message);
-		$wnd.console.trace();
 	}-*/;
 	
 	public native static void log(Object message) /*-{
 		$wnd.console.log(message);
-		$wnd.console.trace();
 	}-*/;
 	
 	public native static void alert(String message) /*-{
