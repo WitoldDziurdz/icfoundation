@@ -8,8 +8,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.SimplePanel;
 
 
 /**
