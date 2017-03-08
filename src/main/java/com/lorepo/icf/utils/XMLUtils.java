@@ -20,182 +20,192 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
-*/
+ */
 package com.lorepo.icf.utils;
 
 import com.google.gwt.xml.client.CDATASection;
+import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
+import com.google.gwt.xml.client.XMLParser;
 
 public class XMLUtils {
+	private static final Document doc = XMLParser.createDocument();
 
-  /**
-   * Helper function for getting element attribute as string
-   * 
-   * @param name Attribute name
-   * @return attribute text or empty string if not found
-   */
-  public static String getAttributeAsString(Element element, String name){
-	  return getAttributeAsString(element, name, "");
-  }
-  
-  /**
-   * Helper function for getting element attribute as string with default value
-   * 
-   * @param name Attribute name
-   * @return attribute text or empty string if not found
-   */
-  public static String getAttributeAsString(Element element, String name, String defaultValue){
-    String attribute;
-    
-    attribute = element.getAttribute(name);
-    if(attribute == null){
-      return defaultValue;
-    }
-    else{
-      return attribute;
-    }
-  }
-  
-  /**
-   * Helper function for getting element attribute as boolean
-   * 
-   * @param name Attribute name
-   * @return attribute value or false if not found
-   */
-  public static boolean getAttributeAsBoolean(Element element, String name){
-      return getAttributeAsBoolean(element, name, false);
-  }
-  
-  public static boolean getAttributeAsBoolean(Element element, String name, boolean defaultValue){
-	    String attribute;
-	    
-	    attribute = element.getAttribute(name);
-	    
-	    if(!defaultValue){
-		    if(attribute == null){
-		      return false;
-		    }
-		    else{
-		      return (attribute.compareToIgnoreCase("true") == 0);
-		    }
-	    }
-	    else{
-		    if(attribute == null){
-			    return true;
-		    }
-			else{
+	public static Element createElement(String name) {
+		return XMLUtils.doc.createElement(name);
+	}
+	
+	public static CDATASection createCDATASection(String value) {
+		return XMLUtils.doc.createCDATASection(value);
+	}
+
+	public static void setBooleanAttribute(Element element, String key, boolean value) {
+		element.setAttribute(key, Boolean.toString(value));
+	}
+	
+	public static void setIntegerAttribute(Element element, String key, int value) {
+		element.setAttribute(key, Integer.toString(value));
+	}
+
+	/**
+	 * Helper function for getting element attribute as string
+	 * 
+	 * @param name
+	 *            Attribute name
+	 * @return attribute text or empty string if not found
+	 */
+	public static String getAttributeAsString(Element element, String name) {
+		return getAttributeAsString(element, name, "");
+	}
+
+	/**
+	 * Helper function for getting element attribute as string with default
+	 * value
+	 * 
+	 * @param name
+	 *            Attribute name
+	 * @return attribute text or empty string if not found
+	 */
+	public static String getAttributeAsString(Element element, String name, String defaultValue) {
+		String attribute;
+
+		attribute = element.getAttribute(name);
+		if (attribute == null) {
+			return defaultValue;
+		} else {
+			return attribute;
+		}
+	}
+
+	/**
+	 * Helper function for getting element attribute as boolean
+	 * 
+	 * @param name
+	 *            Attribute name
+	 * @return attribute value or false if not found
+	 */
+	public static boolean getAttributeAsBoolean(Element element, String name) {
+		return getAttributeAsBoolean(element, name, false);
+	}
+
+	public static boolean getAttributeAsBoolean(Element element, String name, boolean defaultValue) {
+		String attribute;
+
+		attribute = element.getAttribute(name);
+
+		if (!defaultValue) {
+			if (attribute == null) {
+				return false;
+			} else {
+				return (attribute.compareToIgnoreCase("true") == 0);
+			}
+		} else {
+			if (attribute == null) {
+				return true;
+			} else {
 				return (attribute.compareToIgnoreCase("false") != 0);
 			}
-	    }
-	  }
-	  
-  /**
-   * Helper function for getting element attribute as int
-   * 
-   * @param name Attribute name
-   * @return attribute value or 0 if not found
-   */
-  public static int getAttributeAsInt(Element element, String name){
-    String attribute;
-    
-    attribute = element.getAttribute(name);
-    if(attribute == null || attribute.isEmpty()){
-      return 0;
-    }
-    else{
-      return (int)Float.parseFloat(attribute);
-    }
-  }
-  
-  
+		}
+	}
+
+	/**
+	 * Helper function for getting element attribute as int
+	 * 
+	 * @param name
+	 *            Attribute name
+	 * @return attribute value or 0 if not found
+	 */
+	public static int getAttributeAsInt(Element element, String name) {
+		String attribute;
+
+		attribute = element.getAttribute(name);
+		if (attribute == null || attribute.isEmpty()) {
+			return 0;
+		} else {
+			return (int) Float.parseFloat(attribute);
+		}
+	}
+	
+	public static int getAttributeAsInt(Element element, String name, int defaultValue) {
+		String attribute;
+
+		attribute = element.getAttribute(name);
+		if (attribute == null) {
+			return defaultValue;
+		} else {
+			return (int) Float.parseFloat(attribute);
+		}
+	}
+
 	/**
 	 * get all TEXT nodes
+	 * 
 	 * @return contents of tag
 	 */
-	public static String getText(Element element){
-		String		text = new String();
-		NodeList	nodes = element.getChildNodes();
-		
-		for(int i = 0; i < nodes.getLength(); i ++){
+	public static String getText(Element element) {
+		String text = new String();
+		NodeList nodes = element.getChildNodes();
+
+		for (int i = 0; i < nodes.getLength(); i++) {
 			Node node = nodes.item(i);
-		
-			if(node.getNodeType() == Node.TEXT_NODE){
+
+			if (node.getNodeType() == Node.TEXT_NODE) {
 				text = text + node.getNodeValue();
 			}
 		}
-		
+
 		return text;
 	}
-	
-	
+
 	public static String getCharacterDataFromElement(Element e) {
-		    
+
 		Node child = e.getFirstChild();
 		if (child instanceof CDATASection) {
 			CDATASection cd = (CDATASection) child;
-		    return cd.getData();
+			return cd.getData();
 		}
 
 		return null;
 	}
 
-	
 	/**
 	 * get CDATA node text
+	 * 
 	 * @return contents of tag
 	 */
-	public static String getCDATA(Element element){
-		String		text = new String();
-		NodeList	nodes = element.getChildNodes();
-		
-		for(int i = 0; i < nodes.getLength(); i ++){
+	public static String getCDATA(Element element) {
+		String text = new String();
+		NodeList nodes = element.getChildNodes();
+
+		for (int i = 0; i < nodes.getLength(); i++) {
 			Node node = nodes.item(i);
-		
-			if(node.getNodeType() == Node.CDATA_SECTION_NODE){
+
+			if (node.getNodeType() == Node.CDATA_SECTION_NODE) {
 				text = text + node.getNodeValue();
 			}
 		}
-		
+
 		return text;
 	}
-	
+
 	/**
 	 * Get first element with given tag name
+	 * 
 	 * @param tagName
 	 * @return first element or null if not found
 	 */
-	public static Element getFirstElementWithTagName(Element element, String tagName){
-    
+	public static Element getFirstElementWithTagName(Element element,
+			String tagName) {
+
 		Element node = null;
 		NodeList nodeList = element.getElementsByTagName(tagName);
-    
-		if(nodeList.getLength() > 0){
-			node = (Element)nodeList.item(0);
+
+		if (nodeList.getLength() > 0) {
+			node = (Element) nodeList.item(0);
 		}
-    
+
 		return node;
 	}
-
-	public static String removeIllegalCharacters(String in) {
-		StringBuffer out = new StringBuffer(); // Used to hold the output.
-        char current; // Used to reference the current character.
-
-        if (in == null || ("".equals(in))){ 
-        	return ""; 
-        }
-        for (int i = 0; i < in.length(); i++) {
-            current = in.charAt(i);
-            if ((current == 0x9) ||
-                (current == 0xA) ||
-                (current == 0xD) ||
-                ((current >= 0x20) && (current <= 0xD7FF)) ||
-                ((current >= 0xE000) && (current <= 0xFFFD)) ||
-                ((current >= 0x10000) && (current <= 0x10FFFF)))
-                out.append(current);
-        }
-        return out.toString();		
-	}
-  
 }
