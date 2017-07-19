@@ -23,6 +23,7 @@
  */
 package com.lorepo.icf.utils;
 
+import com.google.gwt.xml.client.Text;
 import com.google.gwt.xml.client.CDATASection;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -47,6 +48,11 @@ public class XMLUtils {
 	public static CDATASection createCDATASection(String value) {
 		XMLUtils.ensureDocElement();
 		return XMLUtils.doc.createCDATASection(value);
+	}
+	
+	public static Text createTextNode(String value) {
+		XMLUtils.ensureDocElement();
+		return XMLUtils.doc.createTextNode(value);
 	}
 
 	public static void setBooleanAttribute(Element element, String key, boolean value) {
@@ -160,7 +166,8 @@ public class XMLUtils {
 			Node node = nodes.item(i);
 
 			if (node.getNodeType() == Node.TEXT_NODE) {
-				text = text + node.getNodeValue();
+				String nodeText = node.getNodeValue();
+				text = text + nodeText;
 			}
 		}
 
