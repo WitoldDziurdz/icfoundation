@@ -1,9 +1,12 @@
 package com.lorepo.icf.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
@@ -30,6 +33,15 @@ public class JavaScriptUtils {
 		return model;
 	}
 	
+	public static List<String> convertJsArrayToArrayList(JsArrayString jsArray) {
+		List<String> result = new ArrayList<String>();
+		int length = jsArray.length();
+		for (int i = 0; i < length; i++) {
+			result.add(jsArray.get(i));
+		}
+		
+		return result;
+	}
 	
 	public native static void addPropertyToJSArray(JavaScriptObject model, String key, String value)  /*-{
 		model[key] = value;
@@ -47,7 +59,10 @@ public class JavaScriptUtils {
 			return "";
 		}
 	}-*/;
-
+	
+	public native static String getArrayItem(JavaScriptObject arrayObject, int index)  /*-{
+		return arrayObject[index];
+	}-*/;
 
 	public native static void addPropertyToJSArray(JavaScriptObject model,
 			String key, int value) /*-{
