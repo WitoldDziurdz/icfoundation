@@ -12,13 +12,9 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 
+import com.lorepo.icf.utils.NavigationModuleIndentifier;
 
-/**
- * Javascript helper functions
- * 
- * @author Krzysztof Langner
- *
- */
+
 public class JavaScriptUtils {
 
 
@@ -33,11 +29,25 @@ public class JavaScriptUtils {
 		return model;
 	}
 	
-	public static List<String> convertJsArrayToArrayList(JsArrayString jsArray) {
+	public static List<String> convertJsArrayToArrayList (JsArrayString jsArray) {
 		List<String> result = new ArrayList<String>();
-		int length = jsArray.length();
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < jsArray.length(); i++) {
 			result.add(jsArray.get(i));
+		}
+		
+		return result;
+	}
+	
+	private native static String getParameter (String obj, String parameterName) /*-{
+		return obj[parameterName];
+	}-*/;
+	
+	public static List<NavigationModuleIndentifier> convertJsArrayObjectsToJavaObjects (JsArrayString jsArray) {
+		List<NavigationModuleIndentifier> result = new ArrayList<NavigationModuleIndentifier>();
+		
+		for (int i = 0; i < jsArray.length(); i++) {
+			String obj = jsArray.get(i);
+			result.add(new NavigationModuleIndentifier(getParameter(obj, "id"), getParameter(obj, "area")));
 		}
 		
 		return result;
