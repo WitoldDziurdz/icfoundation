@@ -45,6 +45,10 @@ public class JavaScriptUtils {
 	public static List<NavigationModuleIndentifier> convertJsArrayObjectsToJavaObjects (JsArrayString jsArray) {
 		List<NavigationModuleIndentifier> result = new ArrayList<NavigationModuleIndentifier>();
 		
+		if (jsArray == null) {
+			return result;
+		}
+		
 		for (int i = 0; i < jsArray.length(); i++) {
 			String obj = jsArray.get(i);
 			result.add(new NavigationModuleIndentifier(getParameter(obj, "id"), getParameter(obj, "area")));
