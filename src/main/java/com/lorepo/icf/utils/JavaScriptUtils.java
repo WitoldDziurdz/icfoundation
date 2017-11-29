@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONObject;
@@ -16,7 +17,6 @@ import com.lorepo.icf.utils.NavigationModuleIndentifier;
 
 
 public class JavaScriptUtils {
-
 
 	public static JavaScriptObject createHashMap(HashMap<String, String> data){
 		
@@ -57,6 +57,20 @@ public class JavaScriptUtils {
 		return result;
 	}
 	
+	public static JsArray<JavaScriptObject> textToSpeechVoicesObjectToJavaScriptArray (List<TextToSpeechVoice> texts) {
+		JsArray<JavaScriptObject> result = createEmptyJsArray();
+		
+		for (TextToSpeechVoice t : texts) {
+			addElementToJSArray(result, t.getObject());
+		}
+		
+		return result;
+	}
+	
+	private native static JsArray<JavaScriptObject> createEmptyJsArray() /*-{
+		return [];
+	}-*/;
+	
 	public native static void addPropertyToJSArray(JavaScriptObject model, String key, String value)  /*-{
 		model[key] = value;
 	}-*/; 
@@ -65,8 +79,11 @@ public class JavaScriptUtils {
 		model.push(value);
 	}-*/;
 	
+	public native static void addElementToJSArray(JavaScriptObject model, JavaScriptObject value) /*-{
+		model.push(value);
+	}-*/;
+	
 	public native static String getArrayItemByKey(JavaScriptObject model, String key)  /*-{
-
 		if (key in model) {
 			return model[key].toString();
 		} else {
