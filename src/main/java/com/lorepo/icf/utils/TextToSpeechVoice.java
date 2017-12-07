@@ -18,6 +18,13 @@ public class TextToSpeechVoice extends JavaScriptObject implements ITextToSpeech
 		};
 	}-*/;
 	
+	public static native TextToSpeechVoice create (String text) /*-{
+		return {
+			text: text,
+			lang: null
+		};
+	}-*/;
+	
 	public static native TextToSpeechVoice create (String text, String lang) /*-{
 		return {
 			text: text,
