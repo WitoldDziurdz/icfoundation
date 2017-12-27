@@ -94,6 +94,10 @@ public class JavaScriptUtils {
 		$wnd.console.trace();
 	}-*/;
 	
+	public native static void debugger() /*-{
+		debugger;
+	}-*/;
+	
 
 	public native static void makeDraggable(Element e, JavaScriptObject jsObject) /*-{
 		var $element = $wnd.$(e), elementWidth = $element.width(), elementHeight = $element.height();
