@@ -10,7 +10,6 @@ interface ITextToSpeechVoice {
 public class TextToSpeechVoice extends JavaScriptObject implements ITextToSpeechVoice {
 	protected TextToSpeechVoice() {}
 	
-	
 	public static native TextToSpeechVoice create () /*-{
 		return {
 			text: null,
